@@ -1,17 +1,16 @@
 package com.game.kalah.controller;
 
-import com.game.kalah.domain.Game;
 import com.game.kalah.dto.ResponseDTO;
-import com.game.kalah.exception.WrongPitException;
-import com.game.kalah.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.game.kalah.service.ResponseService;
 import com.game.kalah.service.GameInProgressService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 
 /**
  * This class exposes RESTFul end-points which are used to by client to
@@ -20,8 +19,7 @@ import com.game.kalah.service.GameInProgressService;
  * @author Nesrin
  *
  */
-@RestController
-@RequestMapping()
+@Controller
 public class GameInProgressController {
 
          @Autowired
@@ -36,10 +34,10 @@ public class GameInProgressController {
           * @return Updated Game object from the move made a player.
           */
          @RequestMapping(value = "/games/{gameId}/pit/{pitId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-         public ResponseDTO play(
+         public ResponseEntity<ResponseDTO> play(
                  @PathVariable("gameId") Integer gameId,
                  @PathVariable("pitId") Integer pitId) {
-                  return gameService.play(gameId, pitId);
-
+                  ResponseDTO play = gameService.play(gameId, pitId);
+                  return new ResponseEntity<>(play, HttpStatus.ACCEPTED);
          }
 }

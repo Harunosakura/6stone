@@ -2,6 +2,7 @@ package com.game.kalah.controller;
 
 import com.game.kalah.service.GameStatusService;
 import com.game.kalah.domain.Game;
+import com.game.kalah.dto.GameReportDTO;
 import com.game.kalah.dto.ResponseDTO;
 import com.game.kalah.exception.WrongPitException;
 import com.game.kalah.utils.Constants;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.game.kalah.service.ResponseService;
 import com.game.kalah.service.GameInProgressService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 
 /**
  * This class exposes RESTFul end-points which are used to by client to
@@ -21,8 +25,7 @@ import com.game.kalah.service.GameInProgressService;
  * @author Nesrin
  *
  */
-@RestController
-@RequestMapping()
+@Controller
 public class GameStatusController {
 
          @Autowired
@@ -37,8 +40,12 @@ public class GameStatusController {
           * the current state.
           */
          @RequestMapping(value = "/games/{gameId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-         public Game gameStatus(@PathVariable("gameId") Integer gameId) {
-                  return gameStatusService.getGameById(gameId);
+         public ResponseEntity<GameReportDTO> gameStatus(@PathVariable("gameId") Integer gameId) {
+
+                  return new ResponseEntity<>(
+                          new GameReportDTO(
+                                  gameStatusService.getGameById(gameId)), 
+                          HttpStatus.OK);
          }
 
 }

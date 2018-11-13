@@ -1,7 +1,6 @@
 package com.game.kalah.domain;
 
 import com.game.kalah.utils.Status;
-import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 

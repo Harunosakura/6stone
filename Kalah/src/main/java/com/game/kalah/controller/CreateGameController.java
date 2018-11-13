@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.game.kalah.service.ResponseService;
 import com.game.kalah.service.GameInProgressService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 
 /**
  * This class exposes RESTFul end-points which are used to by client to
@@ -21,8 +24,7 @@ import com.game.kalah.service.GameInProgressService;
  * @author Nesrin
  *
  */
-@RestController
-@RequestMapping()
+@Controller
 public class CreateGameController {
 
          @Autowired
@@ -36,8 +38,10 @@ public class CreateGameController {
           *
           */
          @RequestMapping(value = "/games", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-         public ResponseDTO startNewKalahGame() {
-                  return creatGgameService.createNewGame();
+         public ResponseEntity<ResponseDTO> startNewKalahGame() {
+
+                  ResponseDTO newGame = creatGgameService.createNewGame();
+                  return new ResponseEntity<>(newGame, HttpStatus.CREATED);
          }
 
 }
