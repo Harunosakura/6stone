@@ -2,12 +2,9 @@ package com.game.kalah.service.impl;
 
 import com.game.kalah.domain.Game;
 import com.game.kalah.exception.GameNotFoundException;
-import com.game.kalah.exception.WrongPitException;
 import com.game.kalah.repository.GameRepository;
 import com.game.kalah.service.GameStatusService;
-import com.game.kalah.utils.Status;
 import com.game.kalah.utils.Constants;
-import java.util.Arrays;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

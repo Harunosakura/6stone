@@ -1,7 +1,5 @@
 package com.game.kalah.service;
 
-import com.game.kalah.domain.Game;
-import com.game.kalah.exception.WrongPitException;
 import com.game.kalah.dto.ResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

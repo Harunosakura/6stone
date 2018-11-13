@@ -5,7 +5,6 @@
  */
 package com.game.kalah.service.impl;
 
-import com.game.kalah.domain.Game;
 import com.game.kalah.exception.WrongPitException;
 import com.game.kalah.service.ValidationService;
 import com.game.kalah.utils.Constants;
