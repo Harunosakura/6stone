@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * This class exposes RESTFul end-points which are used to by client to
@@ -30,8 +33,8 @@ public class CreateGameController {
           * populated with 6-Stones is returned.
           *
           */
-         @RequestMapping(value = "/games", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-         public ResponseEntity<GameDTO> startNewKalahGame() {
+         @PutMapping(value = "/games", produces = MediaType.APPLICATION_JSON_VALUE)
+         public @ResponseBody ResponseEntity<GameDTO> startNewKalahGame() {
 
                   GameDTO newGame = creatGgameService.createNewGame();
                   return new ResponseEntity<>(newGame, HttpStatus.CREATED);

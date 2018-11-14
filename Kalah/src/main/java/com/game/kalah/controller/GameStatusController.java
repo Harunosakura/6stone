@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * This class exposes RESTFul end-points which are used to by client to
@@ -32,12 +33,12 @@ public class GameStatusController {
           * each pit populated with 6-Stones is returned, which player turn and
           * the current state.
           */
-         @RequestMapping(value = "/games/{gameId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+         @GetMapping(value = "/games/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE)
          public ResponseEntity<GameDTO> gameStatus(@PathVariable("gameId") Integer gameId) {
 
                   return new ResponseEntity<>(
                           new GameDTO(
-                                  gameStatusService.getGameById(gameId)), 
+                                  gameStatusService.getGameById(gameId)),
                           HttpStatus.OK);
          }
 
