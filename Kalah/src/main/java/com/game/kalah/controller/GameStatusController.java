@@ -1,7 +1,7 @@
 package com.game.kalah.controller;
 
 import com.game.kalah.service.GameStatusService;
-import com.game.kalah.dto.GameReportDTO;
+import com.game.kalah.dto.GameDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,10 +33,10 @@ public class GameStatusController {
           * the current state.
           */
          @RequestMapping(value = "/games/{gameId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-         public ResponseEntity<GameReportDTO> gameStatus(@PathVariable("gameId") Integer gameId) {
+         public ResponseEntity<GameDTO> gameStatus(@PathVariable("gameId") Integer gameId) {
 
                   return new ResponseEntity<>(
-                          new GameReportDTO(
+                          new GameDTO(
                                   gameStatusService.getGameById(gameId)), 
                           HttpStatus.OK);
          }

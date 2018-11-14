@@ -1,6 +1,6 @@
 package com.game.kalah.controller;
 
-import com.game.kalah.dto.ResponseDTO;
+import com.game.kalah.dto.GameDTO;
 import com.game.kalah.service.CreateGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -31,9 +31,9 @@ public class CreateGameController {
           *
           */
          @RequestMapping(value = "/games", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-         public ResponseEntity<ResponseDTO> startNewKalahGame() {
+         public ResponseEntity<GameDTO> startNewKalahGame() {
 
-                  ResponseDTO newGame = creatGgameService.createNewGame();
+                  GameDTO newGame = creatGgameService.createNewGame();
                   return new ResponseEntity<>(newGame, HttpStatus.CREATED);
          }
 

@@ -1,7 +1,7 @@
 package com.game.kalah.service.impl;
 
 import com.game.kalah.domain.Game;
-import com.game.kalah.dto.ResponseDTO;
+import com.game.kalah.dto.GameDTO;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import com.game.kalah.service.ResponseService;
 
 /**
- * ResponseServiceImpl Class is responsible for creating the response
- object
+ * ResponseServiceImpl Class is responsible for creating the response object
  *
  * @author Nesrin
  */
@@ -39,16 +38,12 @@ public class ResponseServiceImpl implements ResponseService {
           * object
           */
          @Override
-         public ResponseDTO prepareResponseObject(Game g, boolean start) {
-                  ResponseDTO response = new ResponseDTO();
-                  response.setId(g.getId());
-                  response.setMessage(g.getMessage() + g.getId());
+         public GameDTO prepareResponseObject(Game g, boolean start) {
+                  GameDTO response = new GameDTO(g);
                   if (start)
                            response.setUri(getURI(g.getId()));
-                  else {
+                  else
                            response.setUrl(getURI(g.getId()));
-                           response.setStatus(g.getBoardList());
-                  }
 
                   return response;
          }

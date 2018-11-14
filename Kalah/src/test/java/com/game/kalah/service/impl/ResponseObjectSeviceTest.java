@@ -1,7 +1,6 @@
 package com.game.kalah.service.impl;
 
 import com.game.kalah.GameTest;
-import com.game.kalah.dto.ResponseDTO;
 import com.game.kalah.utils.Constants;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;

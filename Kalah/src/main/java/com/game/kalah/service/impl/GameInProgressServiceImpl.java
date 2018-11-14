@@ -1,10 +1,10 @@
 package com.game.kalah.service.impl;
 
 import com.game.kalah.domain.Game;
+import com.game.kalah.dto.GameDTO;
 import com.game.kalah.repository.GameRepository;
 import com.game.kalah.utils.Status;
 import com.game.kalah.utils.Constants;
-import com.game.kalah.dto.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.game.kalah.service.GameInProgressService;
@@ -45,7 +45,7 @@ public class GameInProgressServiceImpl implements GameInProgressService {
           * @return {@link ResponseDTO} with the effect of required move set
           */
          @Override
-         public ResponseDTO play(Integer gameId, Integer pit) {
+         public GameDTO play(Integer gameId, Integer pit) {
 
                   // Validate parameters
                   validationService.validatePit(pit);

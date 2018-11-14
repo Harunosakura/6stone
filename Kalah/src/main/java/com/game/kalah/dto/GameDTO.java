@@ -8,14 +8,16 @@ import java.util.Map;
  *
  * @author Nesrin
  */
-public class GameReportDTO {
+public class GameDTO {
 
          private Integer id;
          private Map<Integer, Integer> board;
          private String status;
          private String message;
+         private String uri;
+         private String url;
 
-         public GameReportDTO(Game g) {
+         public GameDTO(Game g) {
                   this.id = g.getId();
                   this.message = g.getMessage() + g.getId();
                   this.status = "PLAYER1TURN".equals(g.getStatus().name()) ? "1" : "2";
@@ -72,6 +74,34 @@ public class GameReportDTO {
           */
          public String getMessage() {
                   return message;
+         }
+
+         /**
+          * @return the uri
+          */
+         public String getUri() {
+                  return uri;
+         }
+
+         /**
+          * @param uri the uri to set
+          */
+         public void setUri(String uri) {
+                  this.uri = uri;
+         }
+
+         /**
+          * @return the url
+          */
+         public String getUrl() {
+                  return url;
+         }
+
+         /**
+          * @param url the url to set
+          */
+         public void setUrl(String url) {
+                  this.url = url;
          }
 
          /**

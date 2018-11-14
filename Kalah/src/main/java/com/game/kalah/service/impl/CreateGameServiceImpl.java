@@ -1,12 +1,12 @@
 package com.game.kalah.service.impl;
 
 import com.game.kalah.domain.Game;
+import com.game.kalah.dto.GameDTO;
 import com.game.kalah.repository.GameRepository;
 import com.game.kalah.service.CreateGameService;
 import com.game.kalah.service.ResponseService;
 import com.game.kalah.utils.Status;
 import com.game.kalah.utils.Constants;
-import com.game.kalah.dto.ResponseDTO;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +46,7 @@ public class CreateGameServiceImpl implements CreateGameService {
          }
 
          @Override
-         public ResponseDTO createNewGame() {
+         public GameDTO createNewGame() {
                   return responseService.prepareResponseObject(insertGame(), true);
          }
 }
