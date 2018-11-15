@@ -14,9 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  *
  * @author Nesrin
  */
-//@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {// extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler  {
 
          /**
           *
@@ -25,7 +24,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {// e
           * @return
           */
          @ExceptionHandler(Throwable.class)
-         public @ResponseBody
+         public 
          ResponseEntity<Object> handleExceptionInternal(Exception ex, WebRequest request) {
                   if (ex instanceof GameNotFoundException)
                            return new ResponseEntity<>(
