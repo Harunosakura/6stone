@@ -1,9 +1,11 @@
 package com.game.kalah.service.impl;
 
 import com.game.kalah.domain.Game;
+import com.game.kalah.dto.GameDTO;
 import com.game.kalah.exception.GameNotFoundException;
 import com.game.kalah.repository.GameRepository;
 import com.game.kalah.service.GameStatusService;
+import com.game.kalah.service.ResponseService;
 import com.game.kalah.utils.Constants;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class GameStatusServiceImpl implements GameStatusService {
          @Autowired
          private GameRepository repository;
 
+         @Autowired
+         private ResponseService responseService;
+
          /**
           * Retrieve {@link Game} with requested ID
           *
@@ -37,6 +42,14 @@ public class GameStatusServiceImpl implements GameStatusService {
                            return gameOp.get();
                   else
                            throw new GameNotFoundException(Constants.ERR_GAME_NOT_FOUND, id);
+         }
+
+         @Override
+         public GameDTO createNewGame() {
+                  return responseService.prepareResponseObject(
+                          repository.save(
+                                  new Game(Constants.START_MESSAGE)),
+                          true);
          }
 
 }

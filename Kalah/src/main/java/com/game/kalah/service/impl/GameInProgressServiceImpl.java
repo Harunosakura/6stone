@@ -2,10 +2,8 @@ package com.game.kalah.service.impl;
 
 import com.game.kalah.domain.Game;
 import com.game.kalah.dto.GameDTO;
-import com.game.kalah.exception.WrongPitException;
 import com.game.kalah.repository.GameRepository;
 import com.game.kalah.utils.Status;
-import com.game.kalah.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.game.kalah.service.GameInProgressService;
@@ -13,6 +11,8 @@ import com.game.kalah.service.GameStatusService;
 import com.game.kalah.service.ResponseService;
 import com.game.kalah.service.ValidationService;
 import java.util.List;
+import static com.game.kalah.utils.Constants.*;
+import static com.game.kalah.utils.Status.*;
 
 /**
  * Class GameServiceImpl is responsible for handling the following actions:<br>
@@ -81,33 +81,33 @@ public class GameInProgressServiceImpl implements GameInProgressService {
                   Integer pitSumSideOne = 0;
                   List<Integer> board = g.getBoardList();
 
-                  for (Integer i = 0; i < Constants.KALAH_1; i++)
+                  for (Integer i = 0; i < KALAH_1; i++)
                            pitSumSideOne += board.get(i);
 
                   Integer pitSumSideTwo = 0;
 
-                  for (Integer i = 7; i < Constants.KALAH_2; i++)
+                  for (Integer i = 7; i < KALAH_2; i++)
                            pitSumSideTwo += board.get(i);
 
                   if (pitSumSideOne == 0 || pitSumSideTwo == 0) {
 
-                           board.set(Constants.KALAH_1,
-                                   board.get(Constants.KALAH_1) + pitSumSideOne);
+                           board.set(KALAH_1,
+                                   board.get(KALAH_1) + pitSumSideOne);
 
-                           board.set(Constants.KALAH_2,
-                                   board.get(Constants.KALAH_2) + pitSumSideTwo);
+                           board.set(KALAH_2,
+                                   board.get(KALAH_2) + pitSumSideTwo);
 
-                           if (board.get(Constants.KALAH_1) > board.get(Constants.KALAH_2))
+                           if (board.get(KALAH_1) > board.get(KALAH_2))
                                     g.setStatus(Status.PLAYER1WINS);
                            else
                                     g.setStatus(Status.PLAYER2WINS);
 
-                           for (int i = 0; i < Constants.MAX_NUMBER_OF_PITS; i++) {
+                           for (int i = 0; i < MAX_NUMBER_OF_PITS; i++) {
                                     if (validationService.isKalah(i))
                                              continue;
                                     board.set(i, 0);
                            }
-                           g.setMessage(Constants.END_MESSAGE);
+                           g.setMessage(END_MESSAGE);
                   }
                   g.setBoardList(board);
 
@@ -124,7 +124,7 @@ public class GameInProgressServiceImpl implements GameInProgressService {
           */
          private Integer next(Integer pit) {
                   pit++;
-                  return pit % Constants.MAX_NUMBER_OF_PITS;
+                  return pit % MAX_NUMBER_OF_PITS;
          }
 
          /**
@@ -134,7 +134,7 @@ public class GameInProgressServiceImpl implements GameInProgressService {
           * @return 6 if player 1, and 13 if player 2
           */
          private int getKalah(int player) {
-                  return (player == 1) ? Constants.KALAH_1 : Constants.KALAH_2;
+                  return (player == 1) ? KALAH_1 : KALAH_2;
          }
 
          /**
@@ -146,9 +146,9 @@ public class GameInProgressServiceImpl implements GameInProgressService {
          private Status setNextTurn(Status currentStatus) {
 
                   if (currentStatus.equals(Status.PLAYER1TURN))
-                           return Status.PLAYER2TURN;
+                           return PLAYER2TURN;
 
-                  return Status.PLAYER1TURN;
+                  return PLAYER1TURN;
          }
 
          private Game applyStepMove(Game g, Integer pit) {
@@ -201,7 +201,7 @@ public class GameInProgressServiceImpl implements GameInProgressService {
                   // set the pit selected by player to Zero
                   board.set(pit, 0);
                   g.setBoardList(board);
-                  g.setMessage(Constants.IN_PROGRESS_MESSAGE);
+                  g.setMessage(IN_PROGRESS_MESSAGE);
 
                   // if the last piece was added to the Kalah pit 
                   // then the player is allowed to play again 

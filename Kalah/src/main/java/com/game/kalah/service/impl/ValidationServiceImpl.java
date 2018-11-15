@@ -7,9 +7,10 @@ package com.game.kalah.service.impl;
 
 import com.game.kalah.exception.WrongPitException;
 import com.game.kalah.service.ValidationService;
-import com.game.kalah.utils.Constants;
 import com.game.kalah.utils.Status;
 import org.springframework.stereotype.Service;
+import static com.game.kalah.utils.Constants.*;
+import static com.game.kalah.utils.Status.*;
 
 /**
  *
@@ -21,9 +22,9 @@ public class ValidationServiceImpl implements ValidationService {
          @Override
          public void validatePit(Integer pit) throws WrongPitException {
                   if (isKalah(pit))
-                           throw new WrongPitException(Constants.ERR_KALAH_PIT);
+                           throw new WrongPitException(ERR_KALAH_PIT);
                   if (pit < 0 || pit > 12)
-                           throw new WrongPitException(Constants.ERR_WRONG_PIT);
+                           throw new WrongPitException(ERR_WRONG_PIT);
          }
 
          /**
@@ -36,10 +37,10 @@ public class ValidationServiceImpl implements ValidationService {
           */
          @Override
          public void validateAction(Status gameStatus, Integer pit) throws WrongPitException {
-                  if (!((gameStatus.equals(Status.PLAYER1TURN) && 0 <= pit && pit <= 5)
-                          || (gameStatus.equals(Status.PLAYER2TURN) && 7 <= pit && pit <= 12)))
+                  if (!((gameStatus.equals(PLAYER1TURN) && 0 <= pit && pit <= 5)
+                          || (gameStatus.equals(PLAYER2TURN) && 7 <= pit && pit <= 12)))
 
-                           throw new WrongPitException(Constants.ERR_WRONG_PIT);
+                           throw new WrongPitException(ERR_WRONG_PIT);
          }
 
          @Override
@@ -47,7 +48,7 @@ public class ValidationServiceImpl implements ValidationService {
                   // if pits greater than zero then 
                   //start adding them to the next pits  except the other player Kalah
                   if (piecesCount == 0)
-                           throw new WrongPitException(Constants.ERR_EMPTY_PIT);
+                           throw new WrongPitException(ERR_EMPTY_PIT);
          }
 
          /**
@@ -58,7 +59,7 @@ public class ValidationServiceImpl implements ValidationService {
           */
          @Override
          public boolean isKalah(Integer pit) {
-                  return pit == Constants.KALAH_1 || pit == Constants.KALAH_2;
+                  return pit == KALAH_1 || pit == KALAH_2;
          }
 
          /**

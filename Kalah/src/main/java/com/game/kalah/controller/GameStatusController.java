@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * This class exposes RESTFul end-points which are used to by client to
@@ -23,8 +24,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class GameStatusController {
 
          @Autowired
-         private GameStatusService gameStatusService;
+         private GameStatusService gameService;
+        /**
+          * This service end-point initialize and starts a new GameServiceImpl.
+          *
+          * @return ResponseDTO containing new game details object with each pit
+          * populated with 6-Stones is returned.
+          *
+          */
+         @PostMapping(value = "/games", produces = MediaType.APPLICATION_JSON_VALUE)
+         public ResponseEntity<GameDTO> startNewGame() {
 
+                  GameDTO newGame = gameService.createNewGame();
+                  return new ResponseEntity<>(newGame, HttpStatus.CREATED);
+         }
          /**
           * Check the current status of specific game
           *
@@ -38,7 +51,7 @@ public class GameStatusController {
                   
                   return new ResponseEntity<>(
                           new GameDTO(
-                                  gameStatusService.getGameById(gameId)),
+                                  gameService.getGameById(gameId)),
                           HttpStatus.OK);
          }
 

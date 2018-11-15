@@ -41,9 +41,5 @@ public class GlobalExceptionHandler  {
                                    new ErrorDetails(ex.getMessage(), HttpStatus.BAD_REQUEST,
                                            request.getDescription(false)),
                                    HttpStatus.BAD_REQUEST);
-//                  if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status))
-//                           request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
-//
-//                  return new ResponseEntity<>(ex.getMessage(), headers, status);
          }
 }

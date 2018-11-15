@@ -18,33 +18,33 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public class GameTest {
 
-         public Game game;
-         private Integer[] initialBoard;
-         public String serverAddress;
-         public String url;
-
-         @Value("${server.port}")
-         public int port;
-
-         @Before
-         public void setup() {
-                  initialBoard = new Integer[]{6, 6, 6, 6, 6, 6, 0, 6, 6, 6, 6, 6, 6, 0};
-                  game = new Game(Arrays.asList(initialBoard),
-                          Status.PLAYER1TURN, Constants.START_MESSAGE);
-                  game.setId(1);
-                  try {
-                           this.serverAddress = InetAddress.getLocalHost().getHostAddress();
-                  } catch (UnknownHostException ex) {
-                           ex.getMessage();
-                  }
-                  url = "http://" + serverAddress + ":" + port + "/games";
-         }
-
-         public Map prepareMapOfBoard(List<Integer> board) {
-                  Map<Integer, Integer> boardToMap = new HashMap<>();
-                  for (int i = 0; i < board.size(); i++)
-                           boardToMap.put(i + 1, board.get(i));
-                  return boardToMap;
-         }
+//         public Game game;
+//         private Integer[] initialBoard;
+//         public String serverAddress;
+//         public String url;
+//
+//         @Value("${server.port}")
+//         public int port;
+//
+//         @Before
+//         public void setup() {
+//                  initialBoard = new Integer[]{6, 6, 6, 6, 6, 6, 0, 6, 6, 6, 6, 6, 6, 0};
+//                  game = new Game(Arrays.asList(initialBoard),
+//                          Status.PLAYER1TURN, Constants.START_MESSAGE);
+//                  game.setId(1);
+//                  try {
+//                           this.serverAddress = InetAddress.getLocalHost().getHostAddress();
+//                  } catch (UnknownHostException ex) {
+//                           ex.getMessage();
+//                  }
+//                  url = "http://" + serverAddress + ":" + port + "/games";
+//         }
+//
+//         public Map prepareMapOfBoard(List<Integer> board) {
+//                  Map<Integer, Integer> boardToMap = new HashMap<>();
+//                  for (int i = 0; i < board.size(); i++)
+//                           boardToMap.put(i + 1, board.get(i));
+//                  return boardToMap;
+//         }
 
 }
