@@ -27,7 +27,6 @@ public class CreateGameServiceImpl implements CreateGameService {
 
          @Autowired
          private ResponseService responseService;
-         static Integer[] INITIAL_BOARD;
 
          /**
           * Initializes Kalah game with start board configuration and status.
@@ -35,7 +34,6 @@ public class CreateGameServiceImpl implements CreateGameService {
           * @return {@link Game} with new id not used previously
           */
          private Game insertGame() {
-                  INITIAL_BOARD = new Integer[]{6, 6, 6, 6, 6, 6, 0, 6, 6, 6, 6, 6, 6, 0};
                   Game saveNewGame = repository.save(
                           new Game(Arrays.asList(INITIAL_BOARD.clone()),
                                   Status.PLAYER1TURN,

@@ -10,8 +10,9 @@ import org.slf4j.LoggerFactory;
  */
 public interface CreateGameService {
 
-         static final Logger LOGGER = LoggerFactory.getLogger(CreateGameService.class);
+         Logger LOGGER = LoggerFactory.getLogger(CreateGameService.class);
+         Integer[] INITIAL_BOARD = new Integer[]{6, 6, 6, 6, 6, 6, 0, 6, 6, 6, 6, 6, 6, 0};
 
-         public GameDTO createNewGame();
+         GameDTO createNewGame();
 
 }
