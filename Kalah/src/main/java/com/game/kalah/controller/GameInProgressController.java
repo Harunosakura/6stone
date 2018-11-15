@@ -63,12 +63,12 @@ public class GameInProgressController {
           * @param pitId
           * @return Updated Game object from the move made a player.
           */
-         @PostMapping(value = "/games/{gameId}/pit/{pitId}", 
+         @PostMapping(value = "/games/{gameId}/pit/{pitId}",
                  produces = MediaType.APPLICATION_JSON_VALUE)
          public ResponseEntity<GameDTO> play(
                  @PathVariable Integer gameId, @PathVariable Integer pitId) {
-                  
-                  return new ResponseEntity<>(gameService.play(gameId, pitId), 
+
+                  return new ResponseEntity<>(gameService.play(gameId, pitId),
                           HttpStatus.ACCEPTED);
          }
 }

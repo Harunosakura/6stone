@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.util.WebUtils;
 
@@ -16,7 +17,8 @@ import org.springframework.web.util.WebUtils;
 public class GlobalExceptionHandler {
 
          @ExceptionHandler(Throwable.class)
-         public ResponseEntity<Object> handleException(RuntimeException ex, WebRequest request) {
+         
+         public @ResponseBody ResponseEntity<Object> handleException(RuntimeException ex, WebRequest request) {
                   HttpHeaders headers = new HttpHeaders();
 
                   if (ex instanceof GameNotFoundException)

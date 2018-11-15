@@ -34,7 +34,7 @@ public class CreateGameController {
           *
           */
          @PutMapping(value = "/games", produces = MediaType.APPLICATION_JSON_VALUE)
-         public @ResponseBody ResponseEntity<GameDTO> startNewKalahGame() {
+         public ResponseEntity<GameDTO> startNewKalahGame() {
 
                   GameDTO newGame = creatGgameService.createNewGame();
                   return new ResponseEntity<>(newGame, HttpStatus.CREATED);

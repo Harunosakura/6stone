@@ -12,7 +12,7 @@ public class GameDTO {
 
          private Integer id;
          private Map<Integer, Integer> board;
-         private String status;
+         private String player;
          private String message;
          private String uri;
          private String url;
@@ -20,7 +20,7 @@ public class GameDTO {
          public GameDTO(Game g) {
                   this.id = g.getId();
                   this.message = g.getMessage() + g.getId();
-                  this.status = "PLAYER1TURN".equals(g.getStatus().name()) ? "1" : "2";
+                  this.player = "PLAYER1TURN".equals(g.getStatus().name()) ? "1" : "2";
                   board = new HashMap<>();
                   for (int i = 0; i < g.getBoardList().size(); i++)
                            board.put(i + 1, g.getBoardList().get(i));
@@ -58,15 +58,15 @@ public class GameDTO {
          /**
           * @return the status
           */
-         public String getStatus() {
-                  return status;
+         public String getPlayer() {
+                  return player;
          }
 
          /**
           * @param status the status to set
           */
-         public void setStatus(String status) {
-                  this.status = status;
+         public void setPlayer(String player) {
+                  this.player = player;
          }
 
          /**
@@ -114,7 +114,7 @@ public class GameDTO {
          @Override
          public String toString() {
                   return "Game [id=" + getId()
-                          + ", status=" + getStatus()
+                          + ", player=" + getPlayer()
                           + ", message=" + getMessage()
                           + ", board[" + getBoard() + "]]";
          }

@@ -1,6 +1,5 @@
 package com.game.kalah.exception;
 
-import com.game.kalah.exception.WrongPitException;
 import com.game.kalah.utils.Constants;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,18 +12,18 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author Nesrin
  */
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class WrongPitExceptionTest {
 
-//         @Rule
-//         public ExpectedException thrown = ExpectedException.none();
-//
-//         @Test
-//         public void throwsWrongPitException_with_message() {
-//                  thrown.expect(WrongPitException.class);
-//                  thrown.expectMessage(Constants.ERR_EMPTY_PIT);
-//                  throw new WrongPitException("Selected pit is empty! Choose another one");
-//         }
+         @Rule
+         public ExpectedException thrown = ExpectedException.none();
+
+         @Test
+         public void throwsWrongPitException_with_message() {
+                  thrown.expect(WrongPitException.class);
+                  thrown.expectMessage(Constants.ERR_EMPTY_PIT);
+                  throw new WrongPitException("Selected pit is empty! Choose another one");
+         }
 
 }
