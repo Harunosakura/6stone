@@ -22,7 +22,7 @@ public class ValidationServiceImpl implements ValidationService {
          public void validatePit(Integer pit) throws WrongPitException {
                   if (isKalah(pit))
                            throw new WrongPitException(Constants.ERR_KALAH_PIT);
-                  if (pit < 1 || pit > 13)
+                  if (pit < 0 || pit > 12)
                            throw new WrongPitException(Constants.ERR_WRONG_PIT);
          }
 
@@ -33,16 +33,21 @@ public class ValidationServiceImpl implements ValidationService {
           * @param gameStatus represents the current player turn based on class
           * {@link Status}
           * @param pit
-          * @return true if the selected pit is valid for player, and false if
-          * pit if the other player
           */
          @Override
-         public boolean validateAction(Status gameStatus, Integer pit) throws WrongPitException {
-                  if ((gameStatus.equals(Status.PLAYER1TURN) && 0 <= pit && pit <= 5)
-                          || (gameStatus.equals(Status.PLAYER2TURN) && 7 <= pit && pit <= 12))
-                           return true;
+         public void validateAction(Status gameStatus, Integer pit) throws WrongPitException {
+                  if (!((gameStatus.equals(Status.PLAYER1TURN) && 0 <= pit && pit <= 5)
+                          || (gameStatus.equals(Status.PLAYER2TURN) && 7 <= pit && pit <= 12)))
 
-                  throw new WrongPitException(Constants.ERR_WRONG_PIT);
+                           throw new WrongPitException(Constants.ERR_WRONG_PIT);
+         }
+
+         @Override
+         public void validateAvailablePieces(int piecesCount) {
+                  // if pits greater than zero then 
+                  //start adding them to the next pits  except the other player Kalah
+                  if (piecesCount == 0)
+                           throw new WrongPitException(Constants.ERR_EMPTY_PIT);
          }
 
          /**

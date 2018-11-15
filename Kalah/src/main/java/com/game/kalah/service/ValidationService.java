@@ -11,7 +11,9 @@ public interface ValidationService {
 
          public void validatePit(Integer pit) throws WrongPitException;
 
-         public boolean validateAction(Status gameStatus, Integer pit) throws WrongPitException;
+         public void validateAction(Status gameStatus, Integer pit) throws WrongPitException;
+
+         public void validateAvailablePieces(int piecesCount);
 
          public boolean isKalah(Integer pit);
 

@@ -2,6 +2,7 @@ package com.game.kalah.service.impl;
 
 import com.game.kalah.domain.Game;
 import com.game.kalah.dto.GameDTO;
+import com.game.kalah.exception.WrongPitException;
 import com.game.kalah.repository.GameRepository;
 import com.game.kalah.utils.Status;
 import com.game.kalah.utils.Constants;
@@ -46,12 +47,11 @@ public class GameInProgressServiceImpl implements GameInProgressService {
           */
          @Override
          public GameDTO play(Integer gameId, Integer pit) {
+                  // Work with real Index
+                  pit--;
 
                   // Validate parameters
                   validationService.validatePit(pit);
-
-                  // Work with real Index
-                  pit--;
 
                   // Load Game details
                   Game g = gameStatusService.getGameById(gameId);
@@ -77,10 +77,10 @@ public class GameInProgressServiceImpl implements GameInProgressService {
           * Determines if game has concluded and winner.
           */
          private Game checkGameStatus(Game g) {
-                  
+
                   Integer pitSumSideOne = 0;
                   List<Integer> board = g.getBoardList();
-                  
+
                   for (Integer i = 0; i < Constants.KALAH_1; i++)
                            pitSumSideOne += board.get(i);
 
@@ -169,6 +169,8 @@ public class GameInProgressServiceImpl implements GameInProgressService {
                   // if pits greater than zero then 
                   //start adding them to the next pits  except the other player Kalah
                   int currentPitPieces = board.get(pit);
+                  validationService.validateAvailablePieces(currentPitPieces);
+
                   while (currentPitPieces > 0) {
                            Integer dropPit = next(lastDropPit);
                            // if the other player Kalah then , bypass adding a piece
