@@ -22,7 +22,7 @@ public class ValidationServiceImpl implements ValidationService {
          public void validatePit(Integer pit) throws WrongPitException {
                   if (isKalah(pit))
                            throw new WrongPitException(Constants.ERR_KALAH_PIT);
-                  if (pit < 1 || pit > 14)
+                  if (pit < 1 || pit > 13)
                            throw new WrongPitException(Constants.ERR_WRONG_PIT);
          }
 

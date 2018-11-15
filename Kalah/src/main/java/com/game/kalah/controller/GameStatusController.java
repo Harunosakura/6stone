@@ -35,7 +35,7 @@ public class GameStatusController {
           */
          @GetMapping(value = "/games/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE)
          public ResponseEntity<GameDTO> gameStatus(@PathVariable("gameId") Integer gameId) {
-
+                  
                   return new ResponseEntity<>(
                           new GameDTO(
                                   gameStatusService.getGameById(gameId)),

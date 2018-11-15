@@ -8,8 +8,7 @@ import com.game.kalah.service.GameInProgressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PutMapping;
 
 /**
  * This class exposes RESTFul end-points which are used to by client to
@@ -63,7 +62,7 @@ public class GameInProgressController {
           * @param pitId
           * @return Updated Game object from the move made a player.
           */
-         @PostMapping(value = "/games/{gameId}/pit/{pitId}",
+         @PutMapping(value = "/games/{gameId}/pit/{pitId}",
                  produces = MediaType.APPLICATION_JSON_VALUE)
          public ResponseEntity<GameDTO> play(
                  @PathVariable Integer gameId, @PathVariable Integer pitId) {

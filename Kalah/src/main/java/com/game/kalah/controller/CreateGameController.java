@@ -4,14 +4,10 @@ import com.game.kalah.dto.GameDTO;
 import com.game.kalah.service.CreateGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * This class exposes RESTFul end-points which are used to by client to
@@ -33,8 +29,8 @@ public class CreateGameController {
           * populated with 6-Stones is returned.
           *
           */
-         @PutMapping(value = "/games", produces = MediaType.APPLICATION_JSON_VALUE)
-         public ResponseEntity<GameDTO> startNewKalahGame() {
+         @PostMapping(value = "/games", produces = MediaType.APPLICATION_JSON_VALUE)
+         public ResponseEntity<GameDTO> startNewGame() {
 
                   GameDTO newGame = creatGgameService.createNewGame();
                   return new ResponseEntity<>(newGame, HttpStatus.CREATED);
