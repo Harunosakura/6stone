@@ -3,6 +3,7 @@ package com.game.kalah.repository;
 import com.game.kalah.domain.Game;
 import static com.game.kalah.utils.Constants.*;
 import static com.game.kalah.utils.Status.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 import static org.hamcrest.CoreMatchers.*;
@@ -24,7 +25,8 @@ import org.springframework.test.context.ActiveProfiles;
 @RunWith(SpringRunner.class)
 // DataJpaTest supports rollback after running every test case
 @DataJpaTest
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
+
 public class GameRepositoryTest {
 
          private Integer[] INITIAL_BOARD;
@@ -58,12 +60,7 @@ public class GameRepositoryTest {
                   // 2- Check saved game data for reporting
                   Optional<Game> retrieved = repository.findById(1);
                   Game savedGame = retrieved.get();
-//                  new MockUp<CollectionUtils>() {
-//                           @Mock
-//                           public boolean sameElements(List firstList, List secondList) {
-//                                    return false;
-//                           }
-//                  };
+
                   // playing with test options :)
                   /*
                   * return to a good reference 
@@ -82,13 +79,21 @@ public class GameRepositoryTest {
 
                   //import static  org.assertj.core.api.Assertions.*;
 //                  assertThat(repository.findAll()).containsExactly(newGame);
-                  savedGame.setBoardList(Arrays.asList(new Integer[]{0, 7, 7, 7, 7, 7, 1, 6, 6, 6, 6, 6, 6, 0}));
+                  savedGame.setBoardList(
+                          new ArrayList<>(Arrays.asList(new Integer[]{0, 7, 7, 7, 7, 7, 1, 6, 6, 6, 6, 6, 6, 0})));
                   // 3- apply change on the saved game then save again to chek update effect
-//                  Game afterFirstMove = repository.save(savedGame);
-//                  assertNotNull(afterFirstMove);
-//                  assertThat(afterFirstMove, isA(Game.class));
-//                  assertEquals(savedGame, afterFirstMove);
+                  Game afterFirstMove = repository.save(savedGame);
+                  assertNotNull(afterFirstMove);
+                  assertThat(afterFirstMove, isA(Game.class));
+                  assertEquals(savedGame, afterFirstMove);
 
+         }
+
+         @Test
+         public void should_find_no_games_if_repository_is_empty() {
+                  Iterable<Game> games = repository.findAll();
+
+                  assertTrue(games.spliterator().estimateSize() == 0);
          }
 
          private static void fisrtPitPlayerOneMove() {

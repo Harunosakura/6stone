@@ -30,5 +30,5 @@ Response 3	:  {"id":2,
 
 D. Future plan
 1- Test with Jmockito
-2- Profiles & ActiveProfile
+2- Profiles & ActiveProfile -OK
 3- Microservices

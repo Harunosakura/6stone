@@ -17,21 +17,25 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import com.game.kalah.service.GameInProgressService;
 
-
 /**
+ * <ul>
+ * <li>given some preconditions (Arrange) </li>
+ * <li>when an action occurs(Act)</li>
+ * <li> then verify the output (Assert)</li>
+ * </ul>
  *
  * @author Nesrin
  */
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
 //@AutoConfigureMockMvc
-public class GameControllerTest extends GameTest {
+public class GameControllerTest{
 
-//         @MockBean
-//         private GameInProgressService gameService;
-//
-//         @Autowired
-//         private MockMvc mockMvc;
+         @MockBean
+         private GameInProgressService gameService;
+
+         @Autowired
+         private MockMvc mockMvc;
 //
 //         @Test
 //         public void testCreateNewGame() throws Exception {
@@ -115,7 +119,7 @@ public class GameControllerTest extends GameTest {
 //
 //         @Test
 //         public void testPly_return_WrongPitException() throws Exception {
-//                  given(gameService.getGameById(anyInt())).willReturn(game);
+//                  when(gameService.getGameById(anyInt())).thenReturn(game);
 //                  given(gameService.isValidMove(any(), any()))
 //                          .willReturn(false);
 //                  given(gameService.play(any(), any()))

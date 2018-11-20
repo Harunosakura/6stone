@@ -3,15 +3,14 @@ package com.game.kalah.service.impl;
 import com.game.kalah.domain.Game;
 import com.game.kalah.dto.GameDTO;
 import com.game.kalah.repository.GameRepository;
-import com.game.kalah.utils.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.game.kalah.service.GameInProgressService;
 import com.game.kalah.service.GameStatusService;
 import com.game.kalah.service.ResponseService;
-import com.game.kalah.service.ValidationService;
 import java.util.List;
 import static com.game.kalah.utils.Constants.*;
+import static com.game.kalah.utils.MoveUtils.*;
 import static com.game.kalah.utils.Status.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  * Class GameServiceImpl is responsible for handling the following actions:<br>
  * <ul>
  * <li>Moving pits according to players selection</li>
+ * <li>Check status of game at end of current move</li>
  * </ul>
  *
  * @author Nesrin
@@ -43,9 +43,6 @@ public class GameInProgressServiceImpl implements GameInProgressService {
          @Autowired
          private GameStatusService gameStatusService;
 
-         @Autowired
-         private ValidationService validationService;
-
          /**
           * Execute the game as per the player move and update the board
           * position.
@@ -60,13 +57,13 @@ public class GameInProgressServiceImpl implements GameInProgressService {
                   pit--;
 
                   // Validate parameters
-                  validationService.validatePit(pit);
+                  validatePit(pit);
 
                   // Load Game details
                   Game g = gameStatusService.getGameById(gameId);
 
                   // Validate action parameters
-                  validationService.validateAction(g.getStatus(), pit);
+                  validateAction(g.getStatus(), pit);
 
                   // Apply action
                   g = applyStepMove(g, pit);
@@ -107,12 +104,12 @@ public class GameInProgressServiceImpl implements GameInProgressService {
                                    board.get(KALAH_2) + pitSumSideTwo);
 
                            if (board.get(KALAH_1) > board.get(KALAH_2))
-                                    g.setStatus(Status.PLAYER1WINS);
+                                    g.setStatus(PLAYER1WINS);
                            else
-                                    g.setStatus(Status.PLAYER2WINS);
+                                    g.setStatus(PLAYER2WINS);
 
                            for (int i = 0; i < MAX_NUMBER_OF_PITS; i++) {
-                                    if (validationService.isKalah(i))
+                                    if (isKalah(i))
                                              continue;
                                     board.set(i, 0);
                            }
@@ -125,41 +122,6 @@ public class GameInProgressServiceImpl implements GameInProgressService {
                   return g;
          }
 
-         /**
-          * Get the next pit value
-          *
-          * @param pit
-          * @return the next pit value
-          */
-         private Integer next(Integer pit) {
-                  pit++;
-                  return pit % MAX_NUMBER_OF_PITS;
-         }
-
-         /**
-          * Find the value of player Kalah
-          *
-          * @param player which is the current player turn
-          * @return 6 if player 1, and 13 if player 2
-          */
-         private int getKalah(int player) {
-                  return (player == 1) ? KALAH_1 : KALAH_2;
-         }
-
-         /**
-          * Determines and update player turn.
-          *
-          * @param {@link Status}
-          * @return {@link Status} with updated turn status
-          */
-         private Status setNextTurn(Status currentStatus) {
-
-                  if (currentStatus.equals(Status.PLAYER1TURN))
-                           return PLAYER2TURN;
-
-                  return PLAYER1TURN;
-         }
-
          private Game applyStepMove(Game g, Integer pit) {
                   log.info("Start action play {} {}", g, pit);
 
@@ -167,7 +129,7 @@ public class GameInProgressServiceImpl implements GameInProgressService {
 
                   //set the player value to use in next steps
                   int player = 2;
-                  if (g.getStatus().equals(Status.PLAYER1TURN))
+                  if (g.getStatus().equals(PLAYER1TURN))
                            player = 1;
 
                   // find the index of current player Kalah
@@ -178,12 +140,13 @@ public class GameInProgressServiceImpl implements GameInProgressService {
                   // if pits greater than zero then 
                   //start adding them to the next pits  except the other player Kalah
                   int currentPitPieces = board.get(pit);
-                  validationService.validateAvailablePieces(currentPitPieces);
+
+                  validateAvailablePieces(currentPitPieces);
 
                   while (currentPitPieces > 0) {
                            Integer dropPit = next(lastDropPit);
                            // if the other player Kalah then , bypass adding a piece
-                           if (validationService.isKalah(dropPit) && kalah != dropPit) {
+                           if (isKalah(dropPit) && kalah != dropPit) {
                                     lastDropPit = dropPit;
                                     continue;
                            }
@@ -196,7 +159,7 @@ public class GameInProgressServiceImpl implements GameInProgressService {
                   // if the last piece was added in pit that contains zero pieces,
                   // the take all the opposite pit content into the current player Kalah
                   // in addition to his last piece
-                  if (validationService.isValidPlayerPit(player, lastDropPit)
+                  if (isValidPlayerPit(player, lastDropPit)
                           && board.get(lastDropPit) == 1) {
 
                            int oppositePitPiecesCount = board.get(kalah)
