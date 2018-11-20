@@ -1,10 +1,14 @@
 package com.game.kalah.repository;
 
 import com.game.kalah.domain.Game;
+import com.game.kalah.utils.CollectionUtils;
 import static com.game.kalah.utils.Constants.*;
 import static com.game.kalah.utils.Status.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import mockit.Mock;
+import mockit.MockUp;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -12,22 +16,25 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-//import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import static org.assertj.core.api.Assertions.*;
+//import static org.assertj.core.api.Assertions.*;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 /**
  *
  * @author Nesrin
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+// DataJpaTest supports rollback after running every test case
 @DataJpaTest
 public class GameRepositoryTest {
 
          private Integer[] INITIAL_BOARD;
          private Game testGame;
+         private static Game palyedGame;
+
+         @Autowired
+         TestEntityManager em;
 
          @Autowired
          private GameRepository repository;
@@ -41,7 +48,7 @@ public class GameRepositoryTest {
                   //  testGame.setId(anyInt());
                   testGame.setMessage(START_MESSAGE);
                   testGame.setId(1);
-
+                  fisrtPitPlayerOneMove();
          }
 
          @Test
@@ -54,7 +61,12 @@ public class GameRepositoryTest {
                   // 2- Check saved game data for reporting
                   Optional<Game> retrieved = repository.findById(1);
                   Game savedGame = retrieved.get();
-
+//                  new MockUp<CollectionUtils>() {
+//                           @Mock
+//                           public boolean sameElements(List firstList, List secondList) {
+//                                    return false;
+//                           }
+//                  };
                   // playing with test options :)
                   /*
                   * return to a good reference 
@@ -72,11 +84,22 @@ public class GameRepositoryTest {
                   assertTrue(savedGame.equals(testGame));
 
                   //import static  org.assertj.core.api.Assertions.*;
-                  assertThat(repository.findAll()).containsExactly(newGame);
-
+//                  assertThat(repository.findAll()).containsExactly(newGame);
+                  savedGame.setBoardList(Arrays.asList(new Integer[]{0, 7, 7, 7, 7, 7, 1, 6, 6, 6, 6, 6, 6, 0}));
                   // 3- apply change on the saved game then save again to chek update effect
-                  
-                  
+//                  Game afterFirstMove = repository.save(savedGame);
+//                  assertNotNull(afterFirstMove);
+//                  assertThat(afterFirstMove, isA(Game.class));
+//                  assertEquals(savedGame, afterFirstMove);
+
          }
 
+         private static void fisrtPitPlayerOneMove() {
+                  palyedGame = new Game();
+                  palyedGame.setId(1);
+                  palyedGame.setMessage(IN_PROGRESS_MESSAGE + palyedGame.getId());
+                  palyedGame.setStatus(PLAYER1TURN);
+                  palyedGame.setBoardList(Arrays.asList(new Integer[]{0, 7, 7, 7, 7, 7, 1, 6, 6, 6, 6, 6, 6, 0}));
+
+         }
 }

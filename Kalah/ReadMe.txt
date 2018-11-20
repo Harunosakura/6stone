@@ -5,7 +5,7 @@ Tools
 IDE   	: Netbeans, easily can import the project to eclipse as it's a maven project.
 DB    	: H2
 Build	: Maven war
-FW		: Spring 2.0.6
+FW	: Spring 2.0.6
 
 
 Allowed Commands
@@ -28,3 +28,7 @@ Response 3	:  {"id":2,
 				"message":"Game is currently in progress with ID: 2",
 				"status":{"1":0,"2":7,"3":7,"4":7,"5":7,"6":7,"7":1,"8":6,"9":6,"10":6,"11":6,"12":6,"13":6,"14":0}}
 
+D. Future plan
+1- Test with Jmockito
+2- Profiles & ActiveProfile
+3- Microservices

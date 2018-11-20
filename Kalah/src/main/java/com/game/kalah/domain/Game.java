@@ -1,16 +1,18 @@
 package com.game.kalah.domain;
 
-import com.game.kalah.utils.CollectionUtils;
+import static com.game.kalah.utils.CollectionUtils.*;
 import com.game.kalah.utils.Status;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
+import lombok.Data;
 
 /**
  *
  * @author Nesrin
  */
+@Data
 @Entity
 public class Game {
 
@@ -32,63 +34,6 @@ public class Game {
                   this.message = message;
          }
 
-         /**
-          * @return the id
-          */
-         public Integer getId() {
-                  return id;
-         }
-
-         /**
-          * @param id
-          */
-         public void setId(Integer id) {
-                  this.id = id;
-         }
-
-         /**
-          * @return the board
-          */
-         public List<Integer> getBoardList() {
-                  return boardList;
-         }
-
-         /**
-          * @param boardList the board to set
-          */
-         public void setBoardList(List<Integer> boardList) {
-                  this.boardList = boardList;
-
-         }
-
-         /**
-          * @return the status
-          */
-         public Status getStatus() {
-                  return status;
-         }
-
-         /**
-          * @param status the status to set
-          */
-         public void setStatus(Status status) {
-                  this.status = status;
-         }
-
-         /**
-          * @return the message
-          */
-         public String getMessage() {
-                  return message;
-         }
-
-         /**
-          * @param message the message to set
-          */
-         public void setMessage(String message) {
-                  this.message = message;
-         }
-
          @Override
          public boolean equals(Object o) {
                   // If the object is compared with itself then return true   
@@ -105,7 +50,17 @@ public class Game {
                   return Objects.equals(c.getId(), id)
                           && c.getMessage().equals(message)
                           && c.getStatus().equals(status)
-                          && CollectionUtils.sameElements(c.getBoardList(), boardList);
+                          && sameElements(c.getBoardList(), boardList);
+         }
+
+         @Override
+         public int hashCode() {
+                  int hash = 7;
+                  hash = 29 * hash + Objects.hashCode(this.id);
+                  hash = 29 * hash + Objects.hashCode(this.boardList);
+                  hash = 29 * hash + Objects.hashCode(this.status);
+                  hash = 29 * hash + Objects.hashCode(this.message);
+                  return hash;
          }
 
          @Override
