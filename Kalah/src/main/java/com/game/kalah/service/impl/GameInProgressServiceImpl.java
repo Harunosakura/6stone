@@ -13,6 +13,7 @@ import com.game.kalah.service.ValidationService;
 import java.util.List;
 import static com.game.kalah.utils.Constants.*;
 import static com.game.kalah.utils.Status.*;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Class GameServiceImpl is responsible for handling the following actions:<br>
@@ -23,6 +24,14 @@ import static com.game.kalah.utils.Status.*;
  * @author Nesrin
  */
 @Service
+/**
+ * The difference is increase of performance, in log4j the string is
+ * concatenated every time the line is evaluated even if log level is lower than
+ * debug so the string will never be used. <br>
+ * slf4j, the string and parameters are passed through to the logger which only
+ * substitutes them if the log message is actually to be used.
+ */
+@Slf4j
 public class GameInProgressServiceImpl implements GameInProgressService {
 
          @Autowired
@@ -111,7 +120,7 @@ public class GameInProgressServiceImpl implements GameInProgressService {
                   }
                   g.setBoardList(board);
 
-                  LOGGER.info("End  checkGameStatus {}", g);
+                  log.info("End  checkGameStatus {}", g);
 
                   return g;
          }
@@ -152,7 +161,7 @@ public class GameInProgressServiceImpl implements GameInProgressService {
          }
 
          private Game applyStepMove(Game g, Integer pit) {
-                  LOGGER.info("Start action play {} {}", g, pit);
+                  log.info("Start action play {} {}", g, pit);
 
                   List<Integer> board = g.getBoardList();
 
@@ -208,7 +217,7 @@ public class GameInProgressServiceImpl implements GameInProgressService {
                   if (kalah != lastDropPit)
                            g.setStatus(setNextTurn(g.getStatus()));
 
-                  LOGGER.info("End  game play {} {}", g, pit);
+                  log.info("End  game play {} {}", g, pit);
 
                   return g;
          }

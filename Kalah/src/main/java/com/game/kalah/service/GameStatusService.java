@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory;
  */
 public interface GameStatusService {
 
-         Logger LOGGER = LoggerFactory.getLogger(GameStatusService.class);
-
          Game getGameById(Integer gId) throws GameNotFoundException;
 
          GameDTO createNewGame();

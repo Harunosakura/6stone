@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  */
 public interface GameInProgressService {
 
-         static final Logger LOGGER = LoggerFactory.getLogger(GameInProgressService.class);
+//         static final Logger LOGGER = LoggerFactory.getLogger(GameInProgressService.class);
 
          public GameDTO play(Integer gameId, Integer pit) throws WrongPitException;
 }

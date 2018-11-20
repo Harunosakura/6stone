@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.game.kalah.service.ResponseService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * ResponseServiceImpl Class is responsible for creating the response object
@@ -14,6 +15,7 @@ import com.game.kalah.service.ResponseService;
  * @author Nesrin
  */
 @Service
+@Slf4j
 public class ResponseServiceImpl implements ResponseService {
 
          private String serverAddress;
@@ -25,7 +27,7 @@ public class ResponseServiceImpl implements ResponseService {
                   try {
                            this.serverAddress = InetAddress.getLocalHost().getHostAddress();
                   } catch (UnknownHostException ex) {
-                           LOGGER.error(ex.getMessage());
+                           log.error(ex.getMessage());
                   }
          }
 

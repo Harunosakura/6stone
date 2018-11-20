@@ -11,7 +11,5 @@ import org.slf4j.LoggerFactory;
  */
 public interface ResponseService {
 
-         static final Logger LOGGER = LoggerFactory.getLogger(ResponseService.class);
-
          public GameDTO prepareResponseObject(Game g, boolean start);
 }

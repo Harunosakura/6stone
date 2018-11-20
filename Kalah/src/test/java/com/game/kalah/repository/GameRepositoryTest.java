@@ -1,14 +1,10 @@
 package com.game.kalah.repository;
 
 import com.game.kalah.domain.Game;
-import com.game.kalah.utils.CollectionUtils;
 import static com.game.kalah.utils.Constants.*;
 import static com.game.kalah.utils.Status.*;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-import mockit.Mock;
-import mockit.MockUp;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -19,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 //import static org.assertj.core.api.Assertions.*;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  *
@@ -27,6 +24,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 @RunWith(SpringRunner.class)
 // DataJpaTest supports rollback after running every test case
 @DataJpaTest
+@ActiveProfiles("dev")
 public class GameRepositoryTest {
 
          private Integer[] INITIAL_BOARD;
@@ -57,7 +55,6 @@ public class GameRepositoryTest {
                   Game newGame = repository.save(
                           new Game(START_MESSAGE)
                   );
-
                   // 2- Check saved game data for reporting
                   Optional<Game> retrieved = repository.findById(1);
                   Game savedGame = retrieved.get();
