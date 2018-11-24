@@ -7,6 +7,10 @@ import java.net.UnknownHostException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.game.kalah.service.ResponseService;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -50,6 +54,19 @@ public class ResponseServiceImpl implements ResponseService {
                   return response;
          }
 
+         @Override
+         public Map<String, Object> prepareResponseObjectForAll(List<Game> g) {
+                  List<GameDTO> games = new ArrayList<>();
+                  g.forEach((_item) -> {
+                           games.add(new GameDTO(_item));
+                  });
+                  Map<String, Object> response = new HashMap<>();
+                  response.put("url", getURI());
+                  response.put("games", games);
+
+                  return response;
+         }
+
          /**
           * prepare the URL required to submit moves and create new game with
           * the ID f the game
@@ -58,7 +75,11 @@ public class ResponseServiceImpl implements ResponseService {
           * @return String object representing the path to the game from browser
           */
          private String getURI(int gameId) {
-                  return "http://" + serverAddress + ":" + serverPort + "/games/" + gameId;
+                  return getURI() + gameId;
+         }
+
+         private String getURI() {
+                  return "http://" + serverAddress + ":" + serverPort + "/games/";
          }
 
 }

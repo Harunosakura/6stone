@@ -9,11 +9,21 @@ import javax.persistence.*;
 import lombok.Data;
 
 /**
+ * Adding <strong>@XmlRootElement</strong> force default response body to be XML
+ * instead of JSON
+ *
+ * To change it in the browser to JSON just add ".json" to the URL <br>
+ * To change it in the browser to XML just add ".xml" to the URL <br>
+ *
+ * Inside the testing tool used in the browser add "Accepted application/xml" or
+ * "Accepted application/json" in the header section
  *
  * @author Nesrin
  */
+//@XmlRootElement  //from javax.xml.bind.annotation.XmlRootElement
 @Data
 @Entity
+
 public class Game {
 
          @Id

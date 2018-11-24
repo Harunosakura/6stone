@@ -6,7 +6,9 @@ import com.game.kalah.exception.GameNotFoundException;
 import com.game.kalah.repository.GameRepository;
 import com.game.kalah.service.GameStatusService;
 import com.game.kalah.service.ResponseService;
-import com.game.kalah.utils.Constants;
+import static com.game.kalah.utils.CollectionUtils.*;
+import static com.game.kalah.utils.Constants.*;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,15 +43,21 @@ public class GameStatusServiceImpl implements GameStatusService {
                   if (gameOp.isPresent())
                            return gameOp.get();
                   else
-                           throw new GameNotFoundException(Constants.ERR_GAME_NOT_FOUND, id);
+                           throw new GameNotFoundException(ERR_GAME_NOT_FOUND, id);
          }
 
          @Override
          public GameDTO createNewGame() {
                   return responseService.prepareResponseObject(
                           repository.save(
-                                  new Game(Constants.START_MESSAGE)),
+                                  new Game(START_MESSAGE)),
                           true);
+         }
+
+         @Override
+         public Map<String, Object> getAllGames() {
+                  Iterable<Game> games = repository.findAll();
+                  return responseService.prepareResponseObjectForAll(copyIterator(games));
          }
 
 }

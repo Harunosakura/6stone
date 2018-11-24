@@ -8,6 +8,8 @@ package com.game.kalah.service;
 import com.game.kalah.domain.Game;
 import com.game.kalah.dto.GameDTO;
 import com.game.kalah.exception.GameNotFoundException;
+import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,8 @@ import org.slf4j.LoggerFactory;
 public interface GameStatusService {
 
          Game getGameById(Integer gId) throws GameNotFoundException;
+
+         Map<String, Object> getAllGames();
 
          GameDTO createNewGame();
 

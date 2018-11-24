@@ -5,6 +5,8 @@
  */
 package com.game.kalah.utils;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -12,6 +14,12 @@ import java.util.List;
  * @author Nesrin
  */
 public class CollectionUtils {
+
+         public static <T> List<T> copyIterator(Iterable<T> iterable) {
+                  Collection<T> collection = new ArrayList<>();
+                  iterable.forEach(collection::add);
+                  return (List<T>) collection;
+         }
 
          public static boolean sameElements(List firstList, List secondList) {
 
