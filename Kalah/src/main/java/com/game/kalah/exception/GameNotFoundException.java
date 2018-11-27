@@ -6,7 +6,7 @@ package com.game.kalah.exception;
  */
 public class GameNotFoundException extends RuntimeException{
 
-         public GameNotFoundException(String msg, int id) {
+         public GameNotFoundException(String msg, long id) {
                   super(msg+id);
          }
 

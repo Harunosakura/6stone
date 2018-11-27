@@ -13,5 +13,5 @@ public interface GameInProgressService {
 
 //         static final Logger LOGGER = LoggerFactory.getLogger(GameInProgressService.class);
 
-         public GameDTO play(Integer gameId, Integer pit) throws WrongPitException;
+         public GameDTO play(Long gameId, Integer pit) throws WrongPitException;
 }

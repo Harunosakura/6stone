@@ -52,7 +52,7 @@ public class GameInProgressServiceImpl implements GameInProgressService {
           * @return {@link ResponseDTO} with the effect of required move set
           */
          @Override
-         public GameDTO play(Integer gameId, Integer pit) {
+         public GameDTO play(Long gameId, Integer pit) {
                   // Work with real Index
                   pit--;
 

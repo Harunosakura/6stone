@@ -37,7 +37,7 @@ public class ResponseObjectSeviceTest extends GameTest {
          @Before
          public void setup() {
                   testGame = new Game(START_MESSAGE);
-                  testGame.setId(1);
+                  testGame.setId(1l);
                   try {
                            this.serverAddress = InetAddress.getLocalHost().getHostAddress();
                   } catch (UnknownHostException ex) {
@@ -49,7 +49,7 @@ public class ResponseObjectSeviceTest extends GameTest {
          @Test
          public void testPrepareResponseObject_game_first_call() {
                   GameDTO prepareResponseObject = rosMock.prepareResponseObject(testGame, true);
-                  assertEquals(Integer.valueOf(1), prepareResponseObject.getId());
+                  assertEquals(Long.valueOf(1), prepareResponseObject.getId());
                   assertEquals(START_MESSAGE + 1, prepareResponseObject.getMessage());
                   assertEquals(url + "/" + 1, prepareResponseObject.getUri());
                   assertEquals(null, prepareResponseObject.getUrl());
@@ -59,7 +59,7 @@ public class ResponseObjectSeviceTest extends GameTest {
          @Test
          public void testPrepareResponseObject_game_in_progress() {
                   GameDTO prepareResponseObject = rosMock.prepareResponseObject(testGame, false);
-                  assertEquals(Integer.valueOf(1), prepareResponseObject.getId());
+                  assertEquals(Long.valueOf(1), prepareResponseObject.getId());
                   assertEquals(START_MESSAGE + 1, prepareResponseObject.getMessage());
 //                  assertEquals(url + "/" + 1, prepareResponseObject.getUrl());
                   assertEquals(null, prepareResponseObject.getUri());

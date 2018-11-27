@@ -38,7 +38,7 @@ public class GameStatusServiceImpl implements GameStatusService {
           * @throws GameNotFoundException in there is no game saved with that ID
           */
          @Override
-         public Game getGameById(Integer id) throws GameNotFoundException {
+         public Game getGameById(Long id) throws GameNotFoundException {
                   Optional<Game> gameOp = repository.findById(id);
                   if (gameOp.isPresent())
                            return gameOp.get();

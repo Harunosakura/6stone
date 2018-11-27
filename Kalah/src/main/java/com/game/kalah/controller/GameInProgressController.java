@@ -97,7 +97,7 @@ public class GameInProgressController {
          @PutMapping(value = "/games/{gameId}/pit/{pitId}",
                  produces = MediaType.APPLICATION_JSON_VALUE)
          public ResponseEntity<GameDTO> play(
-                 @PathVariable Integer gameId, @PathVariable Integer pitId) {
+                 @PathVariable Long gameId, @PathVariable Integer pitId) {
 
                   return new ResponseEntity<>(gameService.play(gameId, pitId),
                           HttpStatus.ACCEPTED);

@@ -47,7 +47,7 @@ public class GameRepositoryTest {
                   testGame.setStatus(PLAYER1TURN);
                   //  testGame.setId(anyInt());
                   testGame.setMessage(START_MESSAGE);
-                  testGame.setId(1);
+                  testGame.setId(1l);
                   fisrtPitPlayerOneMove();
          }
 
@@ -58,7 +58,7 @@ public class GameRepositoryTest {
                           new Game(START_MESSAGE)
                   );
                   // 2- Check saved game data for reporting
-                  Optional<Game> retrieved = repository.findById(1);
+                  Optional<Game> retrieved = repository.findById(1l);
                   Game savedGame = retrieved.get();
 
                   // playing with test options :)
@@ -98,7 +98,7 @@ public class GameRepositoryTest {
 
          private static void fisrtPitPlayerOneMove() {
                   palyedGame = new Game();
-                  palyedGame.setId(1);
+                  palyedGame.setId(1l);
                   palyedGame.setMessage(IN_PROGRESS_MESSAGE + palyedGame.getId());
                   palyedGame.setStatus(PLAYER1TURN);
                   palyedGame.setBoardList(Arrays.asList(new Integer[]{0, 7, 7, 7, 7, 7, 1, 6, 6, 6, 6, 6, 6, 0}));

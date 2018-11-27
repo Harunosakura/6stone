@@ -74,7 +74,7 @@ public class ResponseServiceImpl implements ResponseService {
           * @param gameId to be concatenated to the URL
           * @return String object representing the path to the game from browser
           */
-         private String getURI(int gameId) {
+         private String getURI(long  gameId) {
                   return getURI() + gameId;
          }
 

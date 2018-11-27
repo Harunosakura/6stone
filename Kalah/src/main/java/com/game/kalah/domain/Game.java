@@ -28,12 +28,15 @@ public class Game {
 
          @Id
          @GeneratedValue(strategy = GenerationType.AUTO)
-         private Integer id;
+         private Long id;
          @ElementCollection
          @Column(name = "pits")
          private List<Integer> boardList;
          private Status status;
          private String message;
+//         @ElementCollection(fetch = FetchType.LAZY)
+         @OneToMany(cascade = {CascadeType.ALL})
+         private List<Fans> fans;
 
          public Game() {
          }
@@ -57,28 +60,28 @@ public class Game {
                   // typecast o to Complex so that we can compare data members  
                   Game c = (Game) o;
 
-                  return Objects.equals(c.getId(), id)
-                          && c.getMessage().equals(message)
-                          && c.getStatus().equals(status)
-                          && sameElements(c.getBoardList(), boardList);
+                  return Objects.equals(c.getId(), getId())
+                          && c.getMessage().equals(getMessage())
+                          && c.getStatus().equals(getStatus())
+                          && sameElements(c.getBoardList(), getBoardList());
          }
 
          @Override
          public int hashCode() {
                   int hash = 7;
-                  hash = 29 * hash + Objects.hashCode(this.id);
-                  hash = 29 * hash + Objects.hashCode(this.boardList);
-                  hash = 29 * hash + Objects.hashCode(this.status);
-                  hash = 29 * hash + Objects.hashCode(this.message);
+                  hash = 29 * hash + Objects.hashCode(this.getId());
+                  hash = 29 * hash + Objects.hashCode(this.getBoardList());
+                  hash = 29 * hash + Objects.hashCode(this.getStatus());
+                  hash = 29 * hash + Objects.hashCode(this.getMessage());
                   return hash;
          }
 
          @Override
          public String toString() {
-                  String game = "Game [id=" + id
-                          + ", status=" + status
-                          + ", message=" + message
-                          + ", board[" + boardList + "]]";
+                  String game = "Game [id=" + getId()
+                          + ", status=" + getStatus()
+                          + ", message=" + getMessage()
+                          + ", board[" + getBoardList() + "]]";
                   return game;
          }
 

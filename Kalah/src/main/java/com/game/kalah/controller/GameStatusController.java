@@ -1,7 +1,11 @@
 package com.game.kalah.controller;
 
+import com.game.kalah.domain.Game;
 import com.game.kalah.service.GameStatusService;
 import com.game.kalah.dto.GameDTO;
+import com.game.kalah.repository.GameRepository;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,6 +28,8 @@ public class GameStatusController {
 
          @Autowired
          private GameStatusService gameService;
+         @Autowired
+         private GameRepository repository;
 
          /**
           * This service end-point initialize and starts a new GameServiceImpl.
@@ -48,7 +54,7 @@ public class GameStatusController {
           * the current state.
           */
          @GetMapping(value = "/games/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE)
-         public ResponseEntity<GameDTO> gameStatus(@PathVariable("gameId") Integer gameId) {
+         public ResponseEntity<GameDTO> gameStatus(@PathVariable("gameId") Long gameId) {
 
                   return new ResponseEntity<>(
                           new GameDTO(
@@ -57,11 +63,16 @@ public class GameStatusController {
          }
 
          @GetMapping(value = "/games/all")
-         public ResponseEntity<Map> allGames() {
-
-                  return new ResponseEntity<>(
-                          gameService.getAllGames(),
-                          HttpStatus.OK);
+         public List<GameDTO> allGames() {
+                  List<GameDTO> games = new ArrayList<>();
+                  Iterable<Game> g = repository.findAll();
+                  g.forEach((_item) -> {
+                           games.add(new GameDTO(_item));
+                  });
+                  return games;
+//                  return new ResponseEntity<>(
+//                          gameService.getAllGames(),
+//                          HttpStatus.OK);
          }
 
 }

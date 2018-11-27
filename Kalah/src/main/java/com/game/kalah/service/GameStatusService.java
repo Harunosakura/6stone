@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public interface GameStatusService {
 
-         Game getGameById(Integer gId) throws GameNotFoundException;
+         Game getGameById(Long gId) throws GameNotFoundException;
 
          Map<String, Object> getAllGames();
 

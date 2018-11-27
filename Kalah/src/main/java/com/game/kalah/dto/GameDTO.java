@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class GameDTO {
 
-         private Integer id;
+         private Long id;
          private Map<Integer, Integer> board;
          private String player;
          private String message;
