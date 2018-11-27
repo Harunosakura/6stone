@@ -24,11 +24,12 @@ import lombok.Data;
 //@XmlRootElement  //from javax.xml.bind.annotation.XmlRootElement
 @Data
 @Entity
-
+@SequenceGenerator(name = "GAME_SEQ", initialValue = 1, allocationSize = 1)
 public class Game {
 
          @Id
-         @GeneratedValue(strategy = GenerationType.AUTO)
+         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GAME_SEQ")
+
          private Long id;
          @ElementCollection
          @Column(name = "pits")
@@ -83,7 +84,7 @@ public class Game {
          @JoinColumn(name = "game_id")
          @Size(max = 2)
          private List<Player> players;
-         @OneToMany(mappedBy = "game",  orphanRemoval = true, cascade = {CascadeType.REMOVE})
+         @OneToMany(mappedBy = "game", orphanRemoval = true, cascade = {CascadeType.REMOVE})
          private List<Fans> fans;
 
          public Game() {

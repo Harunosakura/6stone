@@ -6,6 +6,7 @@ import static com.game.kalah.utils.Status.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -26,12 +27,11 @@ import org.springframework.test.context.ActiveProfiles;
 // DataJpaTest supports rollback after running every test case
 @DataJpaTest
 @ActiveProfiles("test")
-
+@Slf4j
 public class GameRepositoryTest {
 
          private Integer[] INITIAL_BOARD;
          private Game testGame;
-         private static Game palyedGame;
 
          @Autowired
          TestEntityManager em;
@@ -45,22 +45,20 @@ public class GameRepositoryTest {
                   testGame = new Game();
                   testGame.setBoardList(Arrays.asList(INITIAL_BOARD));
                   testGame.setStatus(PLAYER1TURN);
-                  //  testGame.setId(anyInt());
                   testGame.setMessage(START_MESSAGE);
-                  testGame.setId(1l);
-                  fisrtPitPlayerOneMove();
          }
 
          @Test
          public void test_save_game() {
+
                   // 1- Insert new game
                   Game newGame = repository.save(
                           new Game(START_MESSAGE)
                   );
                   // 2- Check saved game data for reporting
-                  Optional<Game> retrieved = repository.findById(1l);
+                  Optional<Game> retrieved = repository.findById(newGame.getId());
                   Game savedGame = retrieved.get();
-
+                  testGame.setId(newGame.getId());
                   // playing with test options :)
                   /*
                   * return to a good reference 
@@ -94,14 +92,12 @@ public class GameRepositoryTest {
                   Iterable<Game> games = repository.findAll();
 
                   assertTrue(games.spliterator().estimateSize() == 0);
+                  // Insert new game
+                  repository.save(
+                          new Game(START_MESSAGE)
+                  );
+                  games = repository.findAll();
+                  assertTrue(games.spliterator().estimateSize() == 1);
          }
 
-         private static void fisrtPitPlayerOneMove() {
-                  palyedGame = new Game();
-                  palyedGame.setId(1l);
-                  palyedGame.setMessage(IN_PROGRESS_MESSAGE + palyedGame.getId());
-                  palyedGame.setStatus(PLAYER1TURN);
-                  palyedGame.setBoardList(Arrays.asList(new Integer[]{0, 7, 7, 7, 7, 7, 1, 6, 6, 6, 6, 6, 6, 0}));
-
-         }
 }

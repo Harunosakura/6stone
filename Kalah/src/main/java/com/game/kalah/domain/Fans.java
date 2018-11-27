@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import lombok.Data;
 
 /**
@@ -15,15 +16,17 @@ import lombok.Data;
  */
 @Data
 @Entity
+@SequenceGenerator(name = "FANS_SEQ", initialValue = 1, allocationSize = 1)
 public class Fans {
+
          @Id
-         @GeneratedValue(strategy = GenerationType.AUTO)
+         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FANS_SEQ")
          private Long Id;
          private String fanName;
          private boolean favourite;
          private String review;
-         
+
          @ManyToOne(fetch = FetchType.LAZY)
-         @JoinColumn(name="game_id")
+         @JoinColumn(name = "game_id")
          private Game game;
-         }
+}
