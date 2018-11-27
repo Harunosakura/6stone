@@ -8,9 +8,12 @@ package com.game.kalah.domain;
 import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.Data;
 
 /**
@@ -19,14 +22,16 @@ import lombok.Data;
  */
 @Data
 @Entity
-public class Fans {
+public class Player {
 
-           @Id
+         @Id
          @GeneratedValue(strategy = GenerationType.AUTO)
          private Long id;
-         private String fanName;
+         private String playerName;
          @ElementCollection
          private List<String> comment;
          private Integer rate;
+         private boolean status;
+
 
 }
