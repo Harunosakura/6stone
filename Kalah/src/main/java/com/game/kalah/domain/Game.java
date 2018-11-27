@@ -34,7 +34,9 @@ public class Game {
          private List<Integer> boardList;
          private Status status;
          private String message;
-//         @ElementCollection(fetch = FetchType.LAZY)
+         
+         // CascadeType.ALL is important to save object of nested Fans in JSON request
+         // before saving game data, and flush the database too.
          @OneToMany(cascade = {CascadeType.ALL})
          private List<Fans> fans;
 
