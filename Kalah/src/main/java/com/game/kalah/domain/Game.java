@@ -83,6 +83,8 @@ public class Game {
          @JoinColumn(name = "game_id")
          @Size(max = 2)
          private List<Player> players;
+         @OneToMany(mappedBy = "game",  orphanRemoval = true, cascade = {CascadeType.REMOVE})
+         private List<Fans> fans;
 
          public Game() {
          }
