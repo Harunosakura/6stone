@@ -1,5 +1,6 @@
 package com.game.kalah.domain;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import lombok.Data;
 @Data
 @Entity
 @SequenceGenerator(name = "FANS_SEQ", initialValue = 1, allocationSize = 1)
-public class Fans {
+public class Fans  implements Serializable{
 
          @Id
          @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FANS_SEQ")

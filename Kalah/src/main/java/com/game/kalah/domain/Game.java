@@ -1,13 +1,19 @@
 package com.game.kalah.domain;
 
 import static com.game.kalah.utils.CollectionUtils.*;
+import static com.game.kalah.utils.Constants.*;
 import com.game.kalah.utils.Status;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * Adding <strong>@XmlRootElement</strong> force default response body to be XML
@@ -24,18 +30,91 @@ import lombok.Data;
 //@XmlRootElement  //from javax.xml.bind.annotation.XmlRootElement
 @Data
 @Entity
+@Table(name = "game")
+@SecondaryTables({
+         @SecondaryTable(name = "game_message", pkJoinColumns = {
+                  @PrimaryKeyJoinColumn(name = "game_id", referencedColumnName = "id")})
+         ,
+         @SecondaryTable(name = "another_game_details", uniqueConstraints = {
+                  @UniqueConstraint(columnNames = {"alternate_name"})})
+})
+
 @SequenceGenerator(name = "GAME_SEQ", initialValue = 1, allocationSize = 1)
-public class Game {
+/**
+ * Serialization Process :- Serialization in java is a mechanism of writing the
+ * state of an object into a byte stream.
+ *
+ * According to JPA Spec:
+ *
+ * "If an entity instance is to be passed by value as a detached object (e.g.,
+ * through a remote interface), the entity class must implement the Serializable
+ * interface."
+ *
+ * "JSR 220: Enterprise JavaBeansTM,Version 3.0 Java Persistence API Version
+ * 3.0, Final Release May 2, 2006"
+ *
+ * When to use it :-
+ *
+ * when we make any POJO class serialize then whenever we try convert it to make
+ * any kind of database understand it changes itself to stream of bits.
+ *
+ * When we are using Hibernate it is not compulsory to make POJO serialized
+ * (because hibernate takes care of it ) but in database transactions we use
+ * native SQL and JPA according to our requirement and so it is mention in JPA
+ * POJO must be serialized.
+ *
+ * And so it is always a good practice to make POJO serialize.
+ */
+public class Game implements Serializable {
 
          @Id
          @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GAME_SEQ")
-
          private Long id;
+         /**
+          * Difference between @Size, @Length and @Column(length=value) when
+          * using JPA and Hibernate.
+          *
+          * @Column is a JPA annotation and the length attribute is used by the
+          * schema generation tool to set the associated SQL column length.<br>
+          *
+          * @Size/@Max/@Min are a <strong>Bean Validation (NOT JPA
+          * validation)</strong> annotation that validates that the associated
+          * String has a value whose length is bounded by the minimum and
+          * maximum values.<br>
+          *
+          * @Length is a Hibernate-specific annotation and has the same meaning
+          * as @Size So both 2. and 3. should validate the String length using
+          * Bean Validation. I'd pick 2. because it's generic.
+          *
+          * @Length/@Max/@Min throws Exception <br>
+          * <i> javax.validation.UnexpectedTypeException: HV000030: No validator
+          * could be found for constraint
+          * 'org.hibernate.validator.constraints.Length' validating type
+          * 'java.util.List'. Check configuration for
+          * 'boardList' </i>
+          */
          @ElementCollection
-         @Column(name = "pits")
+         @Column(name = "pits", length = 2)
+         @Size(max = MAX_NUMBER_OF_PITS, min = MAX_NUMBER_OF_PITS)
          private List<Integer> boardList;
+
+         /*
+          *  Fetch type --> is <strong>EAGER</strong> by default : opposite to fetch of @ManyToMany, ..
+          * optional is <strong>TRUE</strong> by default : opposite to @Column attribute nullable which is false
+          */
+         @Basic(fetch = FetchType.EAGER)
          private Status status;
+         @Column(table = "game_message")
+         @NotBlank // this is for string
          private String message;
+         /*
+          *  Fetch type --> is <strong>EAGER</strong> by default 
+          */
+         @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY)
+          @PrimaryKeyJoinColumn
+         private GameDetails details;
+         @Column(table = "another_game_details", name = "alternate_name")
+         private String alternateNames;
 
          /**
           * Attributes effect.
