@@ -34,3 +34,5 @@ D. Future plan
 2- Profiles & ActiveProfile -OK
 3- Microservices
 4- Security on Microservices using OAuth2
+5- Annotate most cases -OK
+6- Expose Rest from Repository -OK
