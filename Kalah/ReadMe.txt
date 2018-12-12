@@ -34,5 +34,7 @@ D. Future plan
 2- Profiles & ActiveProfile -OK
 3- Microservices
 4- Security on Microservices using OAuth2
-5- Annotate most cases -OK
+5- Annotate most cases -OK 
+        @JPA annotations : https://www.oracle.com/technetwork/middleware/ias/toplink-jpa-annotations-096251.html#IndexOfAnnotations 
+        @Hibernate List : https://docs.jboss.org/hibernate/stable/annotations/reference/en/html_single/#entity-hibspec
 6- Expose Rest from Repository -OK
