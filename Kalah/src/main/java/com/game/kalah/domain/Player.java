@@ -7,13 +7,19 @@ package com.game.kalah.domain;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.SequenceGenerator;
 import lombok.Data;
+import org.hibernate.annotations.DiscriminatorFormula;
 
 /**
  *
@@ -22,7 +28,11 @@ import lombok.Data;
 @Data
 @Entity
 @SequenceGenerator(name = "PLAYER_SEQ", initialValue = 1, allocationSize = 1)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "gender", discriminatorType = DiscriminatorType.CHAR)
+@DiscriminatorValue("N") // to avoid (Using default @DiscriminatorValue for a discriminator of type CHAR is not safe)
 
+//@DiscriminatorFormula("case when gender is not null then 1 else 2 end ")
 public class Player  implements Serializable{
 
          @Id
@@ -33,5 +43,5 @@ public class Player  implements Serializable{
          private List<String> comment;
          private Integer rate;
          private boolean status;
-
+         
 }

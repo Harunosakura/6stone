@@ -18,7 +18,8 @@ import lombok.Data;
 @Data
 @Entity
 @SequenceGenerator(name = "FANS_SEQ", initialValue = 1, allocationSize = 1)
-public class Fans  implements Serializable{
+
+public class Fans  extends BaseEntity implements Serializable {
 
          @Id
          @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FANS_SEQ")

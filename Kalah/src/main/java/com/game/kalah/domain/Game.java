@@ -4,18 +4,38 @@ import static com.game.kalah.utils.CollectionUtils.*;
 import static com.game.kalah.utils.Constants.*;
 import com.game.kalah.utils.Status;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 /**
+ * POJO class object having 3 states
+ * <ul>
+ * <li> Transient state </li>
+ * <li>Persistent state</li>
+ * <li>Detached state </li></ul>
+ * 1.Transient & Persistent states:<br>
+ * <p>
+ * When ever an object of a pojo class is created then it will be in the
+ * Transient state When the object is in a Transient state it doesn’t represent
+ * any row of the database, i mean not associated with any Session object, if we
+ * speak more we can say no relation with the database its just an normal object
+ * If we modify the data of a pojo class object, when it is in transient state
+ * then it doesn’t effect on the database table When the object is in persistent
+ * state, then it represent one row of the database, if the object is in
+ * persistent state then it is associated with the unique Session if we want to
+ * move an object from persistent to detached state, we need to do either
+ * closing that session or need to clear the cache of the session if we want to
+ * move an object from persistent state into transient state then we need to
+ * delete that object permanently from the database
+ * </p>
+ *
+ *
  * Adding <strong>@XmlRootElement</strong> force default response body to be XML
  * instead of JSON
  *
@@ -65,7 +85,7 @@ import org.hibernate.validator.constraints.Length;
  *
  * And so it is always a good practice to make POJO serialize.
  */
-public class Game implements Serializable {
+public class Game extends BaseEntity implements Serializable  {
 
          @Id
          @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GAME_SEQ")
@@ -90,8 +110,7 @@ public class Game implements Serializable {
           * <i> javax.validation.UnexpectedTypeException: HV000030: No validator
           * could be found for constraint
           * 'org.hibernate.validator.constraints.Length' validating type
-          * 'java.util.List'. Check configuration for
-          * 'boardList' </i>
+          * 'java.util.List'. Check configuration for 'boardList' </i>
           */
          @ElementCollection
          @Column(name = "pits", length = 2)
@@ -103,18 +122,23 @@ public class Game implements Serializable {
           * optional is <strong>TRUE</strong> by default : opposite to @Column attribute nullable which is false
           */
          @Basic(fetch = FetchType.EAGER)
+         @Enumerated(EnumType.STRING)
          private Status status;
+         
          @Column(table = "game_message")
          @NotBlank // this is for string
          private String message;
          /*
           *  Fetch type --> is <strong>EAGER</strong> by default 
           */
-         @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY)
-          @PrimaryKeyJoinColumn
+         @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+         @PrimaryKeyJoinColumn
          private GameDetails details;
          @Column(table = "another_game_details", name = "alternate_name")
          private String alternateNames;
+
+         private GameChampionshipDetails champion;
+
 
          /**
           * Attributes effect.
